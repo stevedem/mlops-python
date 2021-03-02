@@ -26,7 +26,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 import os
 import pandas as pd
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import Ridge, LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
@@ -44,8 +44,8 @@ def split_data(df):
 
 
 # Train the model, return the model
-def train_model(data, ridge_args):
-    reg_model = Ridge(**ridge_args)
+def train_model(data):
+    reg_model = LinearRegression()
     reg_model.fit(data["train"]["X"], data["train"]["y"])
     return reg_model
 
@@ -62,7 +62,7 @@ def main():
     print("Running train.py")
 
     # Define training parameters
-    ridge_args = {"alpha": 0.5}
+    # ridge_args = {"alpha": 0.5}
 
     # Load the training data as dataframe
     data_dir = "data"
@@ -72,7 +72,8 @@ def main():
     data = split_data(train_df)
 
     # Train the model
-    model = train_model(data, ridge_args)
+    # model = train_model(data, ridge_args)
+    model = train_model(data)
 
     # Log the metrics for the model
     metrics = get_model_metrics(model, data)
